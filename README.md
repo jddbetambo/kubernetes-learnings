@@ -1,4 +1,4 @@
-# kubernetes-learnings
+# Kubernetes learnings
 <p align="center">
     <img src="images/image.png">
 </p>
@@ -45,4 +45,9 @@ Containers can fail for various reasons, such as hardware issues or software bug
 
 Kubernetes enables horizontal scaling by allowing the dynamic creation and scaling of container replicas based on resource demands. This ensures optimal utilization of resources while handling increased traffic or workload.
 </div>
+
+## What next ?
+3. [Kubernetes Architecture](docs/03-Achritecture.md)
+4. [Kubernetes Manifests](docs/04-Manifest.md)
+5. [Kubernetes Resources](docs/05-Resources.md)
 
