@@ -1,4 +1,4 @@
-# Kubernetes Resources - Replicaset
+# Kubernetes Resources - Deployments
 <p align="center">
     <img src="../images/deployment.png">
 </p>

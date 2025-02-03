@@ -153,6 +153,6 @@ kubectl delete all --all # Deletes pods, replicasets, deployments and services i
 ## What Next ?
 Previous [Deployment](05-Recources-03.md)
 
-Next [ConfigMaps](05-Recources-05.md)
+Next [Ingress](05-Recources-05.md)
 
 </div>
