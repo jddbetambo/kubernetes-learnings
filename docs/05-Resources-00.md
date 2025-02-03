@@ -33,7 +33,7 @@ kubectl get all -n kube-system
 
 **c. Lists available objects under all available namespaces**
 ```bash
-kubectl get all --all-namespaces
+kubectl get all --all-namespaces 
 ```
 
 **d. Create a namespace**
@@ -76,7 +76,7 @@ Labels and Annotations attach metadata to objects in Kubernetes.
 **Declarative method**
 
 <p align="center">
-    <img src="../images/labels.png">
+    <img src="../images/labels.png" width="60%">
 </p>
 
 ```bash
@@ -86,6 +86,7 @@ kubectl get pods -l environment=production # Get the list of the pods with the k
 kubectl get pods -l environment=production, tier=frontend # Get the list of the pods with the key/value environment=production and tier=frontend
 ```
 **Imperative method**
+
 If labels are not mentioned while deploying k8s objects using imperative commands, the label is auto set as app: <object-name>
 ```bash
 kubectl run --image nginx nginx # No Label assigned
@@ -106,25 +107,25 @@ kubectl get pods --show-labels # Get the list of pods with their labels
 
 **c. Selectors**
 - Selectors allows to filter the objects based on labels
-- The API currently supports two types of selectors: equality-basedand set-based
+- The API currently supports two types of selectors: equality-based and set-based
 - A label selector can be made of multiple requirements which are comma-separated.
 
 **Equality-based Selector**
 
-Equality-or inequality-based requirements allow filtering by label keys and values.Three kinds of operators are admitted =,==,!=
+Equality or inequality-based requirements allow filtering by label keys and values.Three kinds of operators are admitted `=,==,!=`.
 <p align="center">
-    <img src="../images/selectors.png">
+    <img src="../images/selectors.png" width="60%">
 </p>
 
 ## What next ?
 
-1. Pods
-2. Replicaset
-3. Nodes
-4. Deployment
-5. Services
-6. ConfigMaps
-7. Secrets
+1. [Pods](./05-Recources-01.md)
+2. [Replicaset](./05-Recources-02.md)
+3. [Deployment](./05-Recources-03.md)
+4. Services
+5. ConfigMaps
+6. Secrets
+7. Nodes
 8. Ingress
 9. Volumes
 10. DaemonSet
