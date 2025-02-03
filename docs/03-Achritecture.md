@@ -1,6 +1,6 @@
 # Kubernetes architecture
 <p align="center">
-    <img src="../images/architecture.png" width="50%" height="50%">
+    <img src="../images/architecture.png" height="50%">
 </p>
 
 
