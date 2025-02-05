@@ -286,7 +286,7 @@ metadata:
   name: mysql-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -302,7 +302,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
 ```
 
 4. Create a Persistent Volume and Persistent Volume Claim for WordPress with the manifest `wordpress-pv-pvc.yml`
@@ -315,7 +315,7 @@ metadata:
   name: wordpress-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -331,60 +331,11 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
 ```
 
-5. Create Services for MySQL, PhpMyAdmin and WordPress with the manifest `services.yml`
 
-```bash
-# MySQL Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-service
-  labels:
-    app: mysql 
-spec:
-  selector:
-    app: mysql
-  ports:
-  - port: 3306
-    targetPort: 3306
----
-# Wordpress Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: wordpress-service
-  labels:
-    app: wordpress 
-spec:
-  type: NodePort
-  selector:
-    app: wordpress
-  ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 30001
----
-# PhpMyAdmin Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: phpmyadmin-service
-  labels:
-    app: phpmyadmin 
-spec:
-  type: NodePort
-  selector:
-    app: phpmyadmin
-  ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 30002
-```
-
-6. Create Mysql Deployment with the manifest `mysql.yml`
+5. Create Mysql Deployment and service with the manifest `mysql.yml`
 
 ```bash
 # MySQl Deployment
@@ -407,29 +358,50 @@ spec:
       containers:
       - name: mysql-container
         image: mysql:5.6
-      env:
-        - name: MYSQL_ROOT_PASSWORD 
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-pass
-        - name: MYSQL_DATABASE 
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-db 
-      ports:
-      - containerPort: 3306
-      volumeMounts:
-        - name:  mysql-pv
-          mountPath:  /var/lib/mysql
+        env:
+          - name: MYSQL_ROOT_PASSWORD 
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-pass
+          - name: MYSQL_DATABASE 
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-db 
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name:  mysql-persistent-storage
+            mountPath:  /var/lib/mysql
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
       volumes:
         - name:  mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-persistent-storage
+            claimName: mysql-pvc
+---
+# MySQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql 
+spec:
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
 ```
 
-7. Create PhpMyAdmin Deployment with the manifest `phpmyadmin.yml`
+6. Create PhpMyAdmin Deployment and service with the manifest `phpmyadmin.yml`
 
 ```bash
 # PhpMyAdmin deployment
@@ -468,10 +440,32 @@ spec:
               key: mysql-pass
         ports:
         - containerPort: 80
-
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+---
+# PhpMyAdmin Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+  labels:
+    app: phpmyadmin 
+spec:
+  type: NodePort
+  selector:
+    app: phpmyadmin
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30002
 ```
 
-8. Create Wordpress Deployment with the manifest `wordpress.yml`
+7. Create Wordpress Deployment with the manifest `wordpress.yml`
 
 ```bash
 # Wordpress Deployment
@@ -494,26 +488,59 @@ spec:
       containers:
       - name: wordpress-container
         image: wordpress:latest
-      env:
-        - name: WORDPRESS_DB_PASSWORD 
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-pass
-        - name: WORDPRESS_DB_HOST 
-          valueFrom:
-            configMapKeyRef:
-              name: mysql-cm
-              key: mysql-url 
-      ports:
-      - containerPort: 80
-      volumeMounts:
-        - name:  wordpress-persistent-storage
-          mountPath:  /var/www/html
+        env:
+          - name: WORDPRESS_DB_USER 
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-user
+          - name: WORDPRESS_DB_PASSWORD 
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-pass
+          - name: WORDPRESS_DB_NAME 
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-db
+          - name: WORDPRESS_DB_HOST 
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-cm
+                key: mysql-url
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name:  wordpress-persistent-storage
+            mountPath:  /var/www/html
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
       volumes:
-        - name:  wordpress-persistent-storage
-          persistentVolumeClaim:
-            claimName: wordpress-pvc 
+      - name:  wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wordpress-pvc 
+---
+# Wordpress Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-service
+  labels:
+    app: wordpress 
+spec:
+  type: NodePort
+  selector:
+    app: wordpress
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001
 ```
 
 
