@@ -1,6 +1,6 @@
 # Kubernetes architecture
 <p align="center">
-    <img src="../images/architecture.png" width="900" height="410">
+    <img src="../images/architecture.png">
 </p>
 
 
@@ -45,4 +45,10 @@ Worker nodes are the compute nodes in the cluster where containers are deployed 
 ## Resources
 - https://shipit.dev/posts/kubernetes-overview-diagrams.html 
 - https://mohan08p.medium.com/simplified-kubernetes-architecture-3febe12480eb
+
+## What next ?
+
+Previous [Home](../README.md)
+
+Next [Manifest](./04-Manifest.md)
 </div>

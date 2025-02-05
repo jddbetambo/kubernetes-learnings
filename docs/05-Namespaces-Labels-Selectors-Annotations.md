@@ -119,16 +119,7 @@ Equality or inequality-based requirements allow filtering by label keys and valu
 
 ## What next ?
 
-1. [Pods](./05-Recources-01.md)
-2. [Replicaset](./05-Recources-02.md)
-3. [Deployment](./05-Recources-03.md)
-4. Services
-5. ConfigMaps
-6. Secrets
-7. Nodes
-8. Ingress
-9. Volumes
-10. DaemonSet
-11. StatefulSet
-12. Jobs & Cron Jobs
+Previous [Manifest](./04-Manifest.md)
+
+Next [Pods](./06-Pods.md)
 </div>

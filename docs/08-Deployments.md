@@ -201,8 +201,8 @@ kubectl delete all --all # Deletes pods, replicasets, deployments and services i
 
 
 ## What Next ?
-Previous [Replicaset](05-Recources-02.md)
+Previous [Replicaset](./07-Replicaset.md)
 
-Next [Services](05-Recources-04.md)
+Next [Services](./09-Services.md)
 
 </div>

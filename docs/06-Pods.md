@@ -101,7 +101,7 @@ kubectl exec -it nginx -- /bin/bash # Start a bash session inside the Pod called
 kubectl delete pod nginx # Delete Pod called nginx
 ```
 ## What Next ?
-Previous [Manifest](./04-Manifest.md)
+Previous [Namespaces-Labels-Selectors-Annotations](./05-Namespaces-Labels-Selectors-Annotations.md)
 
-Next [Replicaset](05-Recources-02.md)
+Next [Replicaset](./07-Replicaset.md)
 </div>

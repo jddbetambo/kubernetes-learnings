@@ -291,8 +291,8 @@ kubectl apply -f services-with-tls.yml
 
 
 ## What Next ?
-Previous [Services](05-Recources-04.md)
+Previous [Services](./09-Services.md)
 
-Next [Nodes](05-Recources-06.md)
+Next [Volumes](./11-Volumes.md)
 
 </div>

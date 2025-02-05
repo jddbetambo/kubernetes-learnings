@@ -83,7 +83,7 @@ kubectl delete -f replicaset.yml
 ```
 
 ## What Next ?
-Previous [Pods](05-Recources-01.md)
+Previous [Pods](./06-Pods.md)
 
-Next [Deployment](05-Recources-03.md)
+Next [Deployment](./08-Deployments.md)
 </div>

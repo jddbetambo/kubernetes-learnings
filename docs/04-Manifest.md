@@ -47,4 +47,10 @@ This example shows two ways to set up configurations in Kubernetes. With the imp
 - https://monokle.io/learn/kubernetes-manifest-files-explained
 - https://medium.com/@a-dem/everything-about-kubernetes-manifest-files-b3c449fceefe
 
+## What next ?
+
+Previous [Architecture](./03-Achritecture.md)
+
+Next [Namespaces-Labels-Selectors-Annotations](./05-Namespaces-Labels-Selectors-Annotations.md)
+
 </div>
