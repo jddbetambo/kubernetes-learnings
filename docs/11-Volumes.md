@@ -1,12 +1,28 @@
-# Kubernetes Resources - Volumes
+# Kubernetes Resources - Daemonset
 <p align="center">
-    <img src="../images/volume1.png">
+    <img src="../images/daemonset1.png" width="90%">
 </p>
 
 <div style="text-align: justify">
 
-## What is a Volume in Kubernetes ? 
-In Kubernetes, volume abstractions are used to provide an API that abstracts the physical implementation of storage from how it is consumed by application resources. Containers running on Kubernetes do not store the data they create or process. A Volume essentially provides a storage directory that can be used by containers running in PODs to store and share data.  
+## What is a DaemonSet In Kubernetes?
+Kubernetes is a distributed system and there should be some functionality for kubernetes platform administrators to run platform-specific applications on all the nodes. For example, running a logging agent on all the Kubernetes nodes.
+
+Here is where Daemonset comes into the picture.
+
+Daemonset is a native **Kubernetes object**. As the name suggests, it is designed to run system daemons.
+
+The DaemonSet object is designed to ensure that **a single pod runs on each worker node**. This means you cannot scale daemonset pods in a node. And for some reason, if the daemonset pod gets deleted from the node, the daemonset controller creates it again.
+
+Let’s look at an example. If there are 500 worker nodes and you deploy a daemonset, the daemonset controller will run one pod per worker node by default. That is a total of 500 pods. However, using **`nodeSelector`**, **`nodeAffinity`**, **`Taints`**, and **`Tolerations`**, you can restrict the daemonset to run on specific nodes.
+
+For example, in a cluster of 100 worker nodes, one might have 20 worker nodes labeled GPU enabled to run batch workloads. And you should run a pod on those 20 worker nodes. In this case, you can deploy the pod as a Daemonset using a node selector. We will look at it practically later in this guide.
+
+Another example is that you have a specific number of worker nodes dedicated to platform tools (ingress, monitoring, logging, etc.) and want to run Daemonset related to platform tools only on the nodes labeled as platform tools. In this case, you can use the **nodeSelector** to run the daemonset pods only on the worker nodes dedicated to platform tooling. 
+
+<p align="center">
+    <img src="../images/daemonset2.png" width="70%">
+</p>
 
 ## Types of Kubernetes Volumes
 There are different types of volumes you can use in a Kubernetes pod:
@@ -555,6 +571,6 @@ spec:
 ## What Next ?
 Previous [Ingress](./10-Ingress.md)
 
-Next [Nodes](05-Recources-06.md)
+Next [Daemonset](./11-Daemonset.md)
 
 </div>
