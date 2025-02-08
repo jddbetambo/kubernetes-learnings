@@ -1,6 +1,6 @@
 # Kubernetes Resources - Ingress
 <p align="center">
-    <img src="../images/ingress.png">
+    <img src="../images/ingress.png" width="60%">
 </p>
 
 <div style="text-align: justify">
