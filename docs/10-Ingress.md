@@ -19,7 +19,7 @@ To quickly recap, Kubernetes provides two ways to expose a service to external t
 2. **LoadBalancer**: An external load balancer (e.g., AWS Elastic Load Balancer, Google Cloud Load Balancer, Azure Load Balancer, MetalLB) is provisioned to load balance and route external requests to Kubernetes internal services.
 
 <p align="center">
-    <img src="../images/ingress2.png">
+    <img src="../images/ingress2.png" width="60%">
 </p>
 
 While both NodePort and LoadBalancer service types allow external traffic into the cluster, their functionalities are quite limited in scope.
@@ -44,7 +44,7 @@ Some managed Kubernetes offerings come with an existing ingress controller (e.g.
 Since ingress-nginx is the ingress controller officially supported by the Kubernetes community, we will use that for this example. 
 
 <p align="center">
-    <img src="../images/ingress3.png" width="100%">
+    <img src="../images/ingress3.png" width="60%">
 </p>
 
 1. The `nginx.conf` file inside the Nginx controller pod is a lua template that can talk to **Kubernetes ingress API** and get the latest values for traffic routing in real-time. [Here is the template file](https://github.com/kubernetes/ingress-nginx/blob/main/rootfs/etc/nginx/template/nginx.tmpl).
@@ -62,7 +62,7 @@ Here is the architecture diagram that explains the ingress & ingress controller 
 Now if you look at the architecture, it will make more sense and you will probably be able to understand how each ingress workflow works.
 
 <p align="center">
-    <img src="../images/ingress4.png">
+    <img src="../images/ingress4.png" width="60%">
 </p>
 
 ## How to set up Nginx ingress
@@ -78,7 +78,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ### Ingress Rules
 
 <p align="center">
-    <img src="../images/ingress7.png">
+    <img src="../images/ingress7.png" width="60%">
 </p>
 
 ### Example 1: Single service ingress
@@ -102,7 +102,7 @@ With host-based load balancing, users can access your service directly by reachi
 We can refer to the official Kubernetes documentation for detailed instructions. Here’s a simple example from the documentation that demonstrates how an Ingress routes all traffic to a single service.
 
 <p align="center">
-    <img src="../images/ingress5.png">
+    <img src="../images/ingress5.png" width="60%">
 </p>
 
 The Ingress controller acts as a managed load balancer for your Kubernetes cluster. You create Ingress resources that define how to route traffic based on various criteria (e.g., URLs, hostnames) to your backend services (applications or pods)
@@ -142,14 +142,14 @@ kubectl apply -f ingress.yml
 curl -L http://foo.bar.com/bar -v
 ```
 <p align="center">
-    <img src="../images/ingress6.png">
+    <img src="../images/ingress6.png" width="70%">
 </p>
 
 ### Example 3: Simple fanout
 A fanout configuration routes traffic based on the HTTP URI of the request. It allows us to use a single load balancer and IP address to serve multiple backend services.
 
 <p align="center">
-    <img src="../images/ingress8.png">
+    <img src="../images/ingress8.png" width="60%">
 </p>
 
 - Edit a manifest `simple-fanout.yml` for ingress rules
@@ -185,7 +185,7 @@ kubectl apply -f simple-fanout.yml
 Hostname-based routing supports having one load balancer to handle traffic for different hostnames pointing to the same IP address.
 
 <p align="center">
-    <img src="../images/ingress9.png">
+    <img src="../images/ingress9.png" width="60%">
 </p>
 
 - Edit a manifest `hostname-based.yml` for the Hostname based routing
@@ -225,7 +225,7 @@ kubectl apply -f hostname-based.yml
 Ingress can also provide TLS support, but it is limited to port 443 only. If the TLS configuration section in an Ingress specifies different hosts, they are multiplexed on the same port according to the hostname that's been specified through the SNI TLS extension (if the Ingress controller supports SNI). The TLS secret must contain keys named tls.crt and tls.key, which contain the certificate and private key for TLS.
 
 <p align="center">
-    <img src="../images/ingress10.png">
+    <img src="../images/ingress10.png" width="60%">
 </p>
 
 - Create a secret with the manifest `secret.yml` 
